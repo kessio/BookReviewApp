@@ -16,4 +16,7 @@ public class Review {
 
     private double rating;
 
+    @ManyToOne
+    private Member member;
+
 }
