@@ -1,5 +1,7 @@
 package com.team110.bookreview;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -8,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+@Data
 @Entity
 @Table(name = "book")
 public class Book {

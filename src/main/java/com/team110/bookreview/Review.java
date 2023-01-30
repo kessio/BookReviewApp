@@ -1,8 +1,11 @@
 package com.team110.bookreview;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.UUID;
 
+@Data
 @Entity
 @Table(name = "reviews")
 public class Review {
