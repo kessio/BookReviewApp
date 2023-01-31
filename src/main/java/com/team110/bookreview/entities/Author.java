@@ -1,4 +1,4 @@
-package com.team110.bookreview;
+package com.team110.bookreview.entities;
 
 
 import lombok.Data;
