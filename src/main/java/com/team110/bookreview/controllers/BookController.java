@@ -1,4 +1,4 @@
-package com.team110.bookreview;
+package com.team110.bookreview.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
