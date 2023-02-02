@@ -1,0 +1,85 @@
+package com.team110.bookreview.configurations.security;
+
+import com.team110.bookreview.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+@EnableWebSecurity
+@RequiredArgsConstructor
+public class SecurityConfiguration {
+        private final JwtAuthFilter jwtAuthFilter;
+        private final UserRepository userRepository;
+        private final UserDetailsService userDetailsService;
+
+
+        private final String[] AUTH_WHITELIST = {
+            //swaggeroi
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui/login/",
+            "/swagger-ui/api/login/",
+            "/swagger-ui/#/**",
+            //swagger ends
+
+            "/login",
+            "/**/register",
+            "/**/app-users",
+             "/**/authenticate",
+             "/**/authenticate2"
+    };
+    @Bean
+    public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
+        http
+                .cors()
+                .and()
+                .csrf().disable()
+                .authorizeHttpRequests()
+//                .antMatchers("/**/auth/**/", "/**/register","/**/app-users").permitAll()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .anyRequest()
+                .authenticated()
+                 .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider())
+                 .addFilterBefore( jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
+        }
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        final DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        return daoAuthenticationProvider;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+     }
+
+     @Bean
+     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+     }
+}

@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.util.UUID;
 @Data
 @Entity
-@Table(name = "author")
+@Table(name = "author_tbl")
 public class Author {
     @Id
     private UUID author_id;

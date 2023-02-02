@@ -10,12 +10,14 @@ import java.util.List;
 import java.util.UUID;
 @Data
 @Entity
-@Table(name = "member")//user_tbl
-public class Member {
+@Table(name = "user_tbl")
+public class User {
     @Id
-    private UUID memberId;
+    private UUID userId;
     private String name;
-    @OneToMany(mappedBy = "member")
+    private String email;
+    private String password;
+    @OneToMany
     private List<Review> reviews;
 
 }

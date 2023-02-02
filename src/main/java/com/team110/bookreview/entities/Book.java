@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "book")
+@Table(name = "book_tbl")
 public class Book {
     @Id
     private UUID bookId;
@@ -21,7 +21,7 @@ public class Book {
     private String description;
     private Date publicationDate;
     private String coverImage;
-    @OneToMany(mappedBy = "book")
+    @OneToMany
     private List<Review> reviews;
 
 }
