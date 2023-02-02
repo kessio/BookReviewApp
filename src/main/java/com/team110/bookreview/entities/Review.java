@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "reviews")
+@Table(name = "reviews_tbl")
 public class Review {
     @Id
     private UUID reviewId;
@@ -20,6 +20,6 @@ public class Review {
     private double rating;
 
     @ManyToOne
-    private Member member;
+    private User user;
 
 }
