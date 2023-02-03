@@ -1,7 +1,7 @@
 package com.team110.bookreview.configurations.security;
 
 
-import com.team110.bookreview.dtos.LoginRequestDto;
+import com.team110.bookreview.dtos.AuthenticateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,7 +19,7 @@ public class LoginService {
 
 
 
-    public String authenticate(LoginRequestDto loginDto) throws Exception {
+    public String authenticate(AuthenticateRequest loginDto) throws Exception {
         try {
             userAuthenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword())

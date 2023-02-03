@@ -20,26 +20,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfiguration {
         private final JwtAuthFilter jwtAuthFilter;
-        private final UserRepository userRepository;
         private final UserDetailsService userDetailsService;
 
 
         private final String[] AUTH_WHITELIST = {
-            //swaggeroi
-            "/v2/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**",
-            "/v3/api-docs/**",
-            "/swagger-ui/**",
-            "/swagger-ui/login/",
-            "/swagger-ui/api/login/",
-            "/swagger-ui/#/**",
-            //swagger ends
-
             "/login",
             "/**/register",
             "/**/app-users",
@@ -82,4 +66,6 @@ public class SecurityConfiguration {
      public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
      }
+
+
 }
